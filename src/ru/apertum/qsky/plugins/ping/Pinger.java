@@ -19,6 +19,7 @@ package ru.apertum.qsky.plugins.ping;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import ru.apertum.qsky.plugins.IQSkyPluginUID;
 import ru.apertum.qsky.plugins.ws.SkyService;
 import ru.apertum.qsystem.extra.IPing;
 
@@ -26,7 +27,7 @@ import ru.apertum.qsystem.extra.IPing;
  *
  * @author egorov
  */
-public class Pinger implements IPing {
+public class Pinger implements IPing, IQSkyPluginUID {
 
     @Override
     public String getDescription() {
@@ -50,5 +51,10 @@ public class Pinger implements IPing {
             throw new RuntimeException("Проблемы с чтением версии. ", ex);
         }
         return SkyService.getInstance().getQsky().ping(settings.getProperty("version"));
+    }
+
+    @Override
+    public long getUID() {
+        return UID;
     }
 }

@@ -17,6 +17,7 @@
 
 package ru.apertum.qsky.plugins.data;
 
+import ru.apertum.qsky.plugins.IQSkyPluginUID;
 import ru.apertum.qsky.plugins.ping.PingResult;
 import ru.apertum.qsky.plugins.ws.SkyService;
 import ru.apertum.qsystem.common.QLog;
@@ -26,7 +27,7 @@ import ru.apertum.qsystem.extra.IDataExchange;
  *
  * @author egorov
  */
-public class DataExchange implements IDataExchange {
+public class DataExchange implements IDataExchange, IQSkyPluginUID {
 
     @Override
     public void sendServiceName(Long branchId, Long serviceId, String name) {
@@ -49,6 +50,11 @@ public class DataExchange implements IDataExchange {
     @Override
     public String getDescription() {
         return "Плагин \"QSkySenderPlugin\". Обмен данными с облаком.";
+    }
+
+    @Override
+    public long getUID() {
+        return UID;
     }
 
 }

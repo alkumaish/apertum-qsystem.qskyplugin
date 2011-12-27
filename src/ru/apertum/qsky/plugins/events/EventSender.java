@@ -16,6 +16,7 @@
  */
 package ru.apertum.qsky.plugins.events;
 
+import ru.apertum.qsky.plugins.IQSkyPluginUID;
 import ru.apertum.qsky.plugins.ping.PingResult;
 import ru.apertum.qsky.plugins.ws.WorkThreads;
 import ru.apertum.qsystem.common.CustomerState;
@@ -27,7 +28,7 @@ import ru.apertum.qsystem.extra.IChangeCustomerStateEvent;
  * Плагин во время смены статуса клиенту отсылает статистику в облако через вебсервис
  * @author egorov
  */
-public class EventSender implements IChangeCustomerStateEvent {
+public class EventSender implements IChangeCustomerStateEvent, IQSkyPluginUID {
 
     @Override
     public void change(QCustomer qc, CustomerState cs, Long newServiceId) {
@@ -43,5 +44,10 @@ public class EventSender implements IChangeCustomerStateEvent {
     @Override
     public String getDescription() {
         return "Плагин \"QSkySenderPlugin\" во время смены статуса клиенту отсылает статистику в облако через вебсервис";
+    }
+
+    @Override
+    public long getUID() {
+        return UID;
     }
 }
