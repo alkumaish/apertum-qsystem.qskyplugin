@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
         *** GENERATED FROM jax-ws.xml - DO NOT EDIT !                             ***
         *** TO MODIFY wsimport options USE Web Service node -> Edit WS Attributes ***
         *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
         *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
 
-        -->
-<project xmlns:xalan="http://xml.apache.org/xslt" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
     <!--
                 ===================
                 JAX-WS WSIMPORT SECTION
@@ -20,8 +18,8 @@
     </target>
     <target name="wsimport-client-customer_events" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/customer_events"/>
-        <property name="wsdl-customer_events" location="xml-resources/web-service-references/customer_events/wsdl/bigboss_8080/QSkyAPI/customer_events.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/customer_events" destdir="${build.generated.dir}/jax-wsCache/customer_events" wsdl="${wsdl-customer_events}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://bigboss:8080/QSkyAPI/customer_events?wsdl" xnocompile="true" xendorsed="true" package="ru.apertum.qsky.plugins.sender">
+        <property name="wsdl-customer_events" location="xml-resources/web-service-references/customer_events/wsdl/bigboss_8080/qskyapi/customer_events.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/customer_events" destdir="${build.generated.dir}/jax-wsCache/customer_events" wsdl="${wsdl-customer_events}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" wsdlLocation="http://bigboss:8080/qskyapi/customer_events?wsdl" xnocompile="true" xendorsed="true" package="ru.apertum.qsky.plugins.sender">
             <depends file="${wsdl-customer_events}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/customer_events"/>
         </wsimport>

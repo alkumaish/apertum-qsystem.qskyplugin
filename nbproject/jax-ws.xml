@@ -3,8 +3,8 @@
   <services/>
   <clients>
     <client name="customer_events">
-      <wsdl-url>http://bigboss:8080/QSkyAPI/customer_events?wsdl</wsdl-url>
-      <local-wsdl-file>bigboss_8080/QSkyAPI/customer_events.wsdl</local-wsdl-file>
+      <wsdl-url>http://bigboss:8080/qskyapi/customer_events?wsdl</wsdl-url>
+      <local-wsdl-file>bigboss_8080/qskyapi/customer_events.wsdl</local-wsdl-file>
       <package-name forceReplace="true">ru.apertum.qsky.plugins.sender</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -18,7 +18,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://bigboss:8080/QSkyAPI/customer_events?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://bigboss:8080/qskyapi/customer_events?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

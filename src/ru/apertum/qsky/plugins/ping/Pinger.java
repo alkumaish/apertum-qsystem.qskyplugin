@@ -32,7 +32,7 @@ public class Pinger implements IPing, IQSkyPluginUID {
     @Override
     public String getDescription() {
         final Properties settings = new Properties();
-        final InputStream inStream = settings.getClass().getResourceAsStream("/version.properties");
+        final InputStream inStream = settings.getClass().getResourceAsStream("/qskyplugin.properties");
         try {
             settings.load(inStream);
         } catch (IOException ex) {
@@ -44,7 +44,7 @@ public class Pinger implements IPing, IQSkyPluginUID {
     @Override
     public int ping() {
         final Properties settings = new Properties();
-        final InputStream inStream = settings.getClass().getResourceAsStream("/version.properties");
+        final InputStream inStream = settings.getClass().getResourceAsStream("/qskyplugin.properties");
         try {
             settings.load(inStream);
         } catch (IOException ex) {

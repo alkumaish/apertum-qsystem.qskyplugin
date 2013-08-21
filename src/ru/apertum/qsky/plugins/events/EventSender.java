@@ -50,4 +50,9 @@ public class EventSender implements IChangeCustomerStateEvent, IQSkyPluginUID {
     public long getUID() {
         return UID;
     }
+
+    @Override
+    public void change(String userPoint, String customerPrefix, int customerNumber, CustomerState cs) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
