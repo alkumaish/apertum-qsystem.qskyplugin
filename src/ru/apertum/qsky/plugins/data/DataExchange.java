@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ru.apertum.qsky.plugins.data;
 
 import ru.apertum.qsky.plugins.IQSkyPluginUID;
@@ -35,16 +34,18 @@ public class DataExchange implements IDataExchange, IQSkyPluginUID {
             QLog.l().logger().error("Версия плагина \"QSkySenderPlugin\" не сообветствует версии облака.");
             return;
         }
+        System.out.println("Service to Sky: " + name + "(" + serviceId + "/" + branchId + ")");
         SkyService.getInstance().getQsky().sendServiceName(branchId, serviceId, name);
     }
 
     @Override
-    public void sendUserName(Long branchId, Long serviceId, String name) {
+    public void sendUserName(Long branchId, Long userId, String name) {
         if (!PingResult.getInstance().isReady()) {
             QLog.l().logger().error("Версия плагина \"QSkySenderPlugin\" не сообветствует версии облака.");
             return;
         }
-        SkyService.getInstance().getQsky().sendUserName(branchId, serviceId, name);
+        System.out.println("User to Sky: " + name + "(" + userId + "/" + branchId + ")");
+        SkyService.getInstance().getQsky().sendUserName(branchId, userId, name);
     }
 
     @Override

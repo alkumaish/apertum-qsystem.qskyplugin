@@ -22,13 +22,13 @@ import ru.apertum.qsystem.common.QLog;
 import ru.apertum.qsystem.server.ServerProps;
 
 /**
- * Поток с сочередью событий, которые надо отправить на сервер в облако
- * Тут происходит ожидание событий и использование коннектора отсылки SkyService
+ * Поток с сочередью событий, которые надо отправить на сервер в облако Тут происходит ожидание событий и использование коннектора отсылки SkyService
+ *
  * @author egorov
  */
 public class WorkerEvents implements Runnable {
 
-    private final LinkedBlockingQueue<EventToSky> eventsToSky = new LinkedBlockingQueue<EventToSky>();
+    private final LinkedBlockingQueue<EventToSky> eventsToSky = new LinkedBlockingQueue<>();
 
     public void sendEvent(EventToSky event) {
         eventsToSky.offer(event);
@@ -45,67 +45,123 @@ public class WorkerEvents implements Runnable {
                 continue;
             }
             try {
+                /*
+                 *branchId"
+                 "serviceId"
+                 "employeeId"
+                 "customerId"
+                 "status"
+                 "number"
+                 "prefix
+                 */
                 switch (event.getCustomerState()) {
                     case STATE_DEAD:
-                        SkyService.getInstance().getQsky().kickCustomer(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                        //(branchId, serviceId, customerId, employeeId, status)
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
                                 event.getService().getId(),
+                                event.getUser().getId(),
                                 event.getCustomer().getId(),
-                                event.getUser().getId());
-                        break;
-                    case STATE_WAIT:
-                        SkyService.getInstance().getQsky().standInService(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getService().getId(),
-                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
                                 event.getCustomer().getNumber(),
                                 event.getCustomer().getPrefix());
                         break;
-                    case STATE_INVITED:
-                        SkyService.getInstance().getQsky().inviteCustomer(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                    case STATE_WAIT:
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
                                 event.getService().getId(),
-                                event.getUser().getId());
+                                null,
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
+                        break;
+                    case STATE_WAIT_AFTER_POSTPONED:
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getService().getId(),
+                                null,
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
+                        break;
+                    case STATE_WAIT_COMPLEX_SERVICE:
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getService().getId(),
+                                event.getUser().getId(),
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
+                        break;
+
+                    case STATE_INVITED:
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getService().getId(),
+                                event.getUser().getId(),
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_INVITED_SECONDARY:
-                        SkyService.getInstance().getQsky().inviteSecondary(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
                                 event.getService().getId(),
-                                event.getUser().getId());
+                                event.getUser().getId(),
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_REDIRECT:
-                        SkyService.getInstance().getQsky().redirectCustomer(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getNewServiceId(),
                                 event.getUser().getId(),
-                                event.getService().getId(),
-                                event.getNewServiceId());
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_WORK:
-                        SkyService.getInstance().getQsky().startWorkWithCustomer(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
                                 event.getService().getId(),
-                                event.getUser().getId());
+                                event.getUser().getId(),
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(), -1, "");
                         break;
                     case STATE_WORK_SECONDARY:
-                        SkyService.getInstance().getQsky().startWorkSecondary(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
                                 event.getService().getId(),
-                                event.getUser().getId());
+                                event.getUser().getId(),
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_BACK:
-                        SkyService.getInstance().getQsky().backInService(ServerProps.getInstance().getProps().getBranchOfficeId(),
-                                event.getCustomer().getId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getNewServiceId(),
                                 event.getUser().getId(),
-                                event.getService().getId(),
-                                event.getNewServiceId());
+                                event.getCustomer().getId(),
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_FINISH:
-                        SkyService.getInstance().getQsky().finishWorkWithCustomer(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                event.getService().getId(),
+                                event.getUser().getId(),
                                 event.getCustomer().getId(),
-                                event.getUser().getId());
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                     case STATE_POSTPONED:
-                        SkyService.getInstance().getQsky().customerToPostponed(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                        SkyService.getInstance().getQsky().changeCustomerStatus(ServerProps.getInstance().getProps().getBranchOfficeId(),
+                                null,
+                                event.getUser().getId(),
                                 event.getCustomer().getId(),
-                                event.getUser().getId());
+                                event.getCustomer().getState().ordinal(),
+                                event.getCustomer().getNumber(),
+                                event.getCustomer().getPrefix());
                         break;
                 }
             } catch (Exception ex) {

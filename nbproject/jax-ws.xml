@@ -3,9 +3,9 @@
   <services/>
   <clients>
     <client name="customer_events">
-      <wsdl-url>http://bigboss:8080/qskyapi/customer_events?wsdl</wsdl-url>
-      <local-wsdl-file>bigboss_8080/qskyapi/customer_events.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">ru.apertum.qsky.plugins.sender</package-name>
+      <wsdl-url>file:/E:/WORK/qskyplugin/src/customer_events.wsdl</wsdl-url>
+      <local-wsdl-file>customer_events.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">ru.apertum.qsky.plugins.ws.ws_client</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -17,8 +17,12 @@
           <wsimport-option-value>true</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://bigboss:8080/qskyapi/customer_events?wsdl</wsimport-option-value>
+          <wsimport-option-value>file:/E:/WORK/qskyplugin/src/customer_events.wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -30,7 +34,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>ru.apertum.qsky.plugins.sender</wsimport-option-value>
+          <wsimport-option-value>ru.apertum.qsky.plugins.ws.ws_client</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

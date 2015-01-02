@@ -28,7 +28,7 @@ import ru.apertum.qsystem.server.ServerProps;
  */
 public class WorkerPositions implements Runnable {
 
-    private final LinkedBlockingQueue<PositionToSky> eventsToSky = new LinkedBlockingQueue<PositionToSky>();
+    private final LinkedBlockingQueue<PositionToSky> eventsToSky = new LinkedBlockingQueue<>();
 
     public void sendEvent(PositionToSky event) {
         eventsToSky.offer(event);

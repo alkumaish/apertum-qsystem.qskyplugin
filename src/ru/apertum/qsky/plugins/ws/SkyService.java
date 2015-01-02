@@ -4,9 +4,8 @@
  */
 package ru.apertum.qsky.plugins.ws;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import ru.apertum.qsky.plugins.sender.CustomerEvents;
+import ru.apertum.qsky.plugins.ws.ws_client.CustomerEvents;
 import ru.apertum.qsystem.common.exceptions.ServerException;
 import ru.apertum.qsystem.server.ServerProps;
 
@@ -21,8 +20,8 @@ public class SkyService {
     private SkyService() {
         try {
             customerEvents = new CustomerEvents(new URL(ServerProps.getInstance().getProps().getSkyServerUrl()));
-        } catch (MalformedURLException ex) {
-            throw new ServerException("Не получилось достучаться до вбсервиса.", ex);
+        } catch (Exception ex) {
+            throw new ServerException("Impossible create access to web service. ", ex);
         }
     }
 
